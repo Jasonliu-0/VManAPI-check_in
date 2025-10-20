@@ -34,6 +34,12 @@ env/
 *~
 .DS_Store
 
+# Claude Code 配置
+.claude/
+
+# Workflow 配置
+.spec-workflow/
+
 # Environment variables
 .env
 .env.local
