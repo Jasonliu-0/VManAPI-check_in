@@ -168,7 +168,7 @@ VManAPI-check_in/
 
 **场景 1: 2个账号,无自定义名称**
 ```bash
-VMAN_AUTHORIZATION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+VMAN_AUTHORIZATION=eyJhbGc***MASKED***,eyJhbGc***MASKED***
 ```
 输出日志:
 ```
@@ -181,7 +181,7 @@ VMAN_AUTHORIZATION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...,eyJhbGciOiJIUzI1NiIsI
 
 **场景 2: 3个账号,自定义名称**
 ```bash
-VMAN_AUTHORIZATION=主账号:token1,工作号:token2,测试号:token3
+VMAN_AUTHORIZATION=主账号:eyJ***,工作号:eyJ***,测试号:eyJ***
 ```
 输出日志:
 ```
@@ -288,10 +288,12 @@ VManAPI 自动签到工具
    - 多账号间已自动添加 2-5 秒随机延迟
    - 避免频繁触发,防止被服务器限制或封禁
 
-5. **隐私保护**:
-   - Fork 仓库后强烈建议设置为 **Private** (私有仓库)
-   - 私有仓库同样可以使用 GitHub Actions
-   - 脚本已实现请求头随机化,每次签到使用不同的浏览器特征
+5. **仓库可见性与隐私保护**:
+   - 🔓 **公开仓库**: 代码公开,但 GitHub Secrets 是加密的,他人无法看到您的 token
+   - 🔒 **私有仓库**: 如需更高隐私级别,可设置为 Private (私有仓库同样支持 GitHub Actions)
+   - ✅ 脚本已实现**请求头随机化**,每次签到使用不同的浏览器特征
+   - ✅ 多账号间已自动添加 **2-5 秒随机延迟**,模拟真实用户行为
+   - ⚠️ 请勿在 Issues、Pull Requests 或任何公开讨论中泄露您的 token
 
 ## 🐛 故障排查
 
