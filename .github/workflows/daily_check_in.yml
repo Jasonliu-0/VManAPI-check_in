@@ -1,0 +1,43 @@
+name: VManAPI 每日自动签到
+
+on:
+  # 定时任务: 每天北京时间 8:00 执行 (UTC 0:00)
+  schedule:
+    - cron: '0 0 * * *'
+
+  # 支持手动触发
+  workflow_dispatch:
+
+jobs:
+  check-in:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 安装依赖
+        run: |
+          pip install --upgrade pip
+          pip install requests
+
+      - name: 执行签到
+        env:
+          VMAN_AUTHORIZATION: ${{ secrets.VMAN_AUTHORIZATION }}
+        run: |
+          python check_in.py
+
+      - name: 签到结果通知
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "✅ 签到成功 - $(date '+%Y-%m-%d %H:%M:%S')"
+          else
+            echo "❌ 签到失败 - $(date '+%Y-%m-%d %H:%M:%S')"
+          fi
